@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     private int i;
     private FirebaseAuth auth = FirebaseAuth.getInstance();
     private FirebaseUser user = auth.getCurrentUser();
-    private Button logout;
+    private Button logout,setting;
    private DatabaseReference db = FirebaseDatabase.getInstance().getReference();
    ListView listView;
     String userSex,oppositeUserSex;
@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         checkUserSex();
+        setting = findViewById(R.id.settting);
 
 
 
@@ -117,6 +118,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onScroll(float scrollProgressPercent) {
 
+            }
+        });
+
+        setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,Settings.class);
+                intent.putExtra("userSex",userSex);
+                startActivity(intent);
             }
         });
 
