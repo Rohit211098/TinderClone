@@ -1,8 +1,8 @@
 package com.example.tinder;
 
 import android.content.Context;
-import android.provider.MediaStore;
-import android.service.autofill.FieldClassification;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.tinder.Chat.ChatActivity;
 
 import java.util.List;
 
@@ -67,6 +68,12 @@ public class CoustomRecycle extends RecyclerView.Adapter<CoustomRecycle.CoustomV
 
         @Override
         public void onClick(View v) {
+
+            Intent intent = new Intent(v.getContext(), ChatActivity.class);
+            Bundle bundle= new Bundle();
+            bundle.putString("MatchId",matchId.getText().toString());
+            intent.putExtras(bundle);
+            v.getContext().startActivity(intent);
 
         }
     }
