@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.tinder.Matches.CoustomRecycle;
 import com.example.tinder.Matches.MatchPojo;
@@ -38,6 +39,7 @@ public class Tab3Fragment extends Fragment {
     private ArrayList<MatchPojo> resultMatch = new ArrayList<>();
 
     private Button btnTEST;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Nullable
     @Override
@@ -53,10 +55,22 @@ public class Tab3Fragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         recyclerView.setAdapter(recycler);
-
+        swipeRefreshLayout = view.findViewById(R.id.swip);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                recyclerView.removeAllViews();
+                resultMatch.clear();
+                getUserMatch();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+        recyclerView.removeAllViews();
         getUserMatch();
         return view;
     }
+
+
 
     private void getUserMatch() {
 

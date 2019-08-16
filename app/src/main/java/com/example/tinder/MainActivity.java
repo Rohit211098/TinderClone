@@ -3,6 +3,7 @@ package com.example.tinder;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.tabs.TabLayout;
@@ -49,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
         adapter.addFragment(new Tab3Fragment());
         viewPager.setAdapter(adapter);
     }
+
+
 
 
 }

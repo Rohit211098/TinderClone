@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.tinder.Chat.ChatActivity;
 import com.example.tinder.R;
 
@@ -22,6 +23,7 @@ public class CoustomRecycle extends RecyclerView.Adapter<CoustomRecycle.CoustomV
 
     List<MatchPojo> list;
     Context context;
+    String matchId;
 
     public CoustomRecycle(List<MatchPojo> list, Context context) {
         this.list = list;
@@ -40,9 +42,9 @@ public class CoustomRecycle extends RecyclerView.Adapter<CoustomRecycle.CoustomV
     @Override
     public void onBindViewHolder(@NonNull CoustomViewHolder holder, int position) {
 
-        holder.matchId.setText(list.get(position).getMatchId());
+        matchId = list.get(position).getMatchId();
         holder.matchName.setText(list.get(position).getMatchName());
-        Glide.with(context).load(list.get(position).getMatchImage()).placeholder(R.drawable.download).into(holder.imageView);
+        Glide.with(context).load(list.get(position).getMatchImage()).placeholder(R.drawable.download).apply(RequestOptions.circleCropTransform()).into(holder.imageView);
 
 
 
@@ -56,14 +58,14 @@ public class CoustomRecycle extends RecyclerView.Adapter<CoustomRecycle.CoustomV
     protected class CoustomViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         private ImageView imageView;
-        private TextView matchId,matchName;
+        private TextView matchName;
 
 
         public CoustomViewHolder(@NonNull View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
             imageView = itemView.findViewById(R.id.image);
-            matchId = itemView.findViewById(R.id.match_id);
+
             matchName = itemView.findViewById(R.id.matchid_name);
         }
 
@@ -72,7 +74,7 @@ public class CoustomRecycle extends RecyclerView.Adapter<CoustomRecycle.CoustomV
 
             Intent intent = new Intent(v.getContext(), ChatActivity.class);
             Bundle bundle= new Bundle();
-            bundle.putString("MatchId",matchId.getText().toString());
+            bundle.putString("MatchId",matchId);
             intent.putExtras(bundle);
             v.getContext().startActivity(intent);
 

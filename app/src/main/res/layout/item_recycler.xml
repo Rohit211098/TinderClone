@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/image"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:src="@drawable/download"/>
 
     <LinearLayout
@@ -19,19 +19,14 @@
         android:orientation="vertical"
         android:padding="5dp">
 
-        <TextView
-            android:id="@+id/match_id"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TextView"
-            android:textSize="20sp" />
 
         <TextView
+            android:padding="10dp"
             android:id="@+id/matchid_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="TextView"
-            android:textSize="20sp" />
+            android:textSize="25sp" />
     </LinearLayout>
 
 </LinearLayout>

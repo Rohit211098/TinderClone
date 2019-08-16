@@ -60,6 +60,7 @@ public class Tab1Fragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(),Edit.class);
                 startActivity(intent);
+                getUserInfo();
             }
         });
 
@@ -102,7 +103,9 @@ public class Tab1Fragment extends Fragment {
     private void logout(){
         auth.signOut();
         Intent intent = new Intent(getContext(),RegistrationAndLogin.class);
+
         startActivity(intent);
+        onDestroy();
 
     }
 }
