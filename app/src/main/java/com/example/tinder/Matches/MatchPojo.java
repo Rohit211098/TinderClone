@@ -1,4 +1,4 @@
-package com.example.tinder;
+package com.example.tinder.Matches;
 
 public class MatchPojo {
     private String matchId,matchName,matchImage;

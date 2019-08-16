@@ -13,18 +13,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Chat.ChatActivity"></activity>
-        <activity android:name=".MatchesActivity" />
-        <activity android:name=".Settings" />
+        <activity android:name=".Matches.MatchesActivity" />
+        <activity android:name=".Edit" />
         <activity android:name=".Registration" />
         <activity android:name=".Login" />
-        <activity android:name=".RegistrationAndLogin">
+        <activity android:name=".RegistrationAndLogin"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
+        <activity android:name=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

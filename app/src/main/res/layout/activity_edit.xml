@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Settings">
+    tools:context=".Edit">
 
     <ImageView
         android:id="@+id/setting_image"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
@@ -17,10 +17,9 @@
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.097"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.037"
+        app:layout_constraintVertical_bias="0.034"
         app:srcCompat="@drawable/download"
         tools:srcCompat="@tools:sample/avatars" />
 
@@ -55,7 +54,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/setting_name"
         app:layout_constraintTop_toBottomOf="@+id/setting_name"
-        app:layout_constraintVertical_bias="0.078" />
+        app:layout_constraintVertical_bias="0.031" />
 
     <Button
         android:id="@+id/setting_back"
@@ -69,7 +68,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/setting_phone"
         app:layout_constraintTop_toBottomOf="@+id/setting_phone"
-        app:layout_constraintVertical_bias="0.084" />
+        app:layout_constraintVertical_bias="0.669" />
 
     <Button
         android:id="@+id/setting_conform"
@@ -80,9 +79,56 @@
         android:text="Conform"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/setting_back"
-        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/setting_back"
         app:layout_constraintTop_toBottomOf="@+id/setting_back"
-        app:layout_constraintVertical_bias="0.148" />
+        app:layout_constraintVertical_bias="0.018" />
+
+    <EditText
+        android:id="@+id/setting_about"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:ems="10"
+        android:hint="About"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/setting_phone"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/setting_phone"
+        app:layout_constraintTop_toBottomOf="@+id/setting_phone"
+        app:layout_constraintVertical_bias="0.045" />
+
+    <EditText
+        android:id="@+id/setting_age"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:ems="10"
+        android:hint="Age"
+        android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/setting_about"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/setting_about"
+        app:layout_constraintTop_toBottomOf="@+id/setting_about"
+        app:layout_constraintVertical_bias="0.041" />
+
+    <EditText
+        android:id="@+id/setting_job"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:ems="10"
+        android:hint="Job"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/setting_age"
+        app:layout_constraintStart_toStartOf="@+id/setting_age"
+        app:layout_constraintTop_toBottomOf="@+id/setting_age"
+        app:layout_constraintVertical_bias="0.032" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

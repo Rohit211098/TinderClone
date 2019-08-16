@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import com.example.tinder.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -59,7 +60,9 @@ public class ChatActivity extends AppCompatActivity {
         mChatAdapter = new ChatCoustomRecycle(getDataSetChat(),ChatActivity.this);
 
         mChatRecyclerView.setHasFixedSize(true);
-        mChatRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setStackFromEnd(true);
+        mChatRecyclerView.setLayoutManager(linearLayoutManager);
 
         mChatRecyclerView.setAdapter(mChatAdapter);
         getChatId();
@@ -153,6 +156,7 @@ public class ChatActivity extends AppCompatActivity {
 
                         ChatPojo chatPojo = new ChatPojo(message,currentUserBoolean);
                         resultChat.add(chatPojo);
+                        mChatRecyclerView.scrollToPosition(mChatAdapter.getItemCount() - 1);
                         mChatAdapter.notifyDataSetChanged();
                     }
                 }

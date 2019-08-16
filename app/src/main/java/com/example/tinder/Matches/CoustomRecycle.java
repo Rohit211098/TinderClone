@@ -1,4 +1,4 @@
-package com.example.tinder;
+package com.example.tinder.Matches;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.tinder.Chat.ChatActivity;
+import com.example.tinder.R;
 
 import java.util.List;
 

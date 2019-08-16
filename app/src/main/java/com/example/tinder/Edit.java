@@ -5,7 +5,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
-import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -13,14 +12,13 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
-import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnFailureListener;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -29,11 +27,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
@@ -41,29 +36,32 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Settings extends AppCompatActivity {
+public class Edit extends AppCompatActivity {
     public static String TAG = "tag";
 
 
     private ImageView userImage;
-    private EditText userName,userPhone;
+    private EditText userName,userPhone,userAbout,userAge,userJob;
     private Button conform,back;
     private DatabaseReference db;
     StorageReference storageReference;
     private FirebaseAuth auth;
-    private String mName,mPhone,mProfilePic,userSex;
+    private String mName,mPhone,mProfilePic,userSex,mAbout,mAge,mJob;
     FirebaseUser mUserId;
     private Uri uriImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
+        setContentView(R.layout.activity_edit);
 
 
           userImage = findViewById(R.id.setting_image);
         userName = findViewById(R.id.setting_name);
         userPhone = findViewById(R.id.setting_phone);
+        userAbout = findViewById(R.id.setting_about);
+        userAge = findViewById(R.id.setting_age);
+        userJob = findViewById(R.id.setting_job);
         conform = findViewById(R.id.setting_conform);
         back = findViewById(R.id.setting_back);
         auth = FirebaseAuth.getInstance();
@@ -134,7 +132,7 @@ public class Settings extends AppCompatActivity {
 
                         }
                     });
-                    Toast.makeText(Settings.this,"upload sucessfull", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Edit.this,"upload sucessfull", Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -195,10 +193,25 @@ public class Settings extends AppCompatActivity {
 
                         userPhone.setText(mPhone);
                     }
+                    if (map.get("about")!=null){
+                        mAbout = map.get("about").toString();
+
+                        userAbout.setText(mAbout);
+                    }
+                    if (map.get("age")!=null){
+                        mAge = map.get("age").toString();
+
+                        userAge.setText(mAge);
+                    }
+                    if (map.get("job")!=null){
+                        mJob = map.get("job").toString();
+
+                        userJob.setText(mJob);
+                    }
                     if (map.get("imageUrl")!=null){
                         mProfilePic = map.get("imageUrl").toString();
 
-                        Glide.with(getApplicationContext()).load(mProfilePic).into(userImage);
+                        Glide.with(getApplicationContext()).load(mProfilePic).placeholder(R.drawable.download).apply(RequestOptions.circleCropTransform()).into(userImage);
                     }
                 }
             }
@@ -213,6 +226,9 @@ public class Settings extends AppCompatActivity {
     private void saveUserSettings() {
         mName = userName.getText().toString().trim();
         mPhone = userPhone.getText().toString().trim();
+        mAbout = userAbout.getText().toString().trim();
+        mAge = userAge.getText().toString().trim();
+        mJob = userJob.getText().toString().trim();
 
         if (mName.equals("") && mPhone.equals("")){
             Toast.makeText(getApplicationContext()," Feilds cannot be empty",Toast.LENGTH_SHORT).show();
@@ -220,6 +236,9 @@ public class Settings extends AppCompatActivity {
             Map userInfo = new HashMap();
             userInfo.put("name",mName);
             userInfo.put("phone",mPhone);
+            userInfo.put("about",mAbout);
+            userInfo.put("age",mAge);
+            userInfo.put("job",mJob);
             db.updateChildren(userInfo).addOnSuccessListener(new OnSuccessListener() {
                 @Override
                 public void onSuccess(Object o) {
