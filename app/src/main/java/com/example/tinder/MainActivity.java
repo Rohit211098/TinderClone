@@ -150,10 +150,14 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
                     Log.e(TAG,dataSnapshot.getKey());
-
+                    String  key = FirebaseDatabase.getInstance().getReference().child("Chat").push().getKey();
                     makeToast(MainActivity.this, "Match!");
-                    userDB.child(dataSnapshot.getKey()).child("Connections").child("matches").child(user.getUid()).setValue("true");
-                    userDB.child(user.getUid()).child("Connections").child("matches").child(dataSnapshot.getKey()).setValue("true");
+
+                    userDB.child(dataSnapshot.getKey()).child("Connections").child("matches").child(user.getUid()).child("chatId").setValue(key);
+
+
+                    userDB.child(user.getUid()).child("Connections").child("matches").child(dataSnapshot.getKey()).child("chatId").setValue(key);
+
 
                 }
 

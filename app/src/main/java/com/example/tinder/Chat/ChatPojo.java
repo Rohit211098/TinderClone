@@ -1,12 +1,21 @@
 package com.example.tinder.Chat;
 
 public class ChatPojo {
-    private String matchId,matchName,matchImage;
+    private String message;
 
 
-    public ChatPojo(String matchId, String matchName, String matchImage) {
+   private Boolean currentUser;
 
+    public ChatPojo(String message, Boolean currentUser) {
+        this.message = message;
+        this.currentUser = currentUser;
     }
 
+    public String getMessage() {
+        return message;
+    }
 
+    public Boolean getCurrentUser() {
+        return currentUser;
+    }
 }
