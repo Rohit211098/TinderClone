@@ -24,6 +24,9 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Registration extends AppCompatActivity {
     private EditText mEmail,mPassword,mName;
     private Button mRegistration;
@@ -98,8 +101,12 @@ public class Registration extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(),"sign up error",Toast.LENGTH_SHORT).show();
                     }else {
                         String id = auth.getCurrentUser().getUid();
-                        DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("Users").child(radioButton.getText().toString()).child(id).child("name");
-                        db.setValue(name);
+                        DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("Users").child(id);
+                        Map userInfo = new HashMap();
+                        userInfo.put("name",name);
+                        userInfo.put("sex",radioButton.getText().toString());
+
+                        db.updateChildren(userInfo);
 
                     }
 

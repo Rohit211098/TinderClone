@@ -11,6 +11,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+
 import java.util.List;
 
 public class CustomArrayAdapter extends ArrayAdapter<User> {
@@ -35,7 +38,7 @@ public class CustomArrayAdapter extends ArrayAdapter<User> {
         ImageView imageView = convertView.findViewById(R.id.image_person);
 
         name.setText(user_item.getName());
-        imageView.setImageResource(R.drawable.download);
+        Glide.with(getContext()).load(user_item.getProfileUrl()).placeholder(R.drawable.download).into(imageView);
 
 
         return convertView;

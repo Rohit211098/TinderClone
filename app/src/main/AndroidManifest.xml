@@ -3,7 +3,7 @@
     package="com.example.tinder">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Settings"></activity>
+        <activity android:name=".MatchesActivity"></activity>
+        <activity android:name=".Settings" />
         <activity android:name=".Registration" />
         <activity android:name=".Login" />
         <activity android:name=".RegistrationAndLogin">

@@ -60,7 +60,7 @@ public class Settings extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-         userSex = getIntent().getExtras().getString("userSex");
+
           userImage = findViewById(R.id.setting_image);
         userName = findViewById(R.id.setting_name);
         userPhone = findViewById(R.id.setting_phone);
@@ -70,7 +70,7 @@ public class Settings extends AppCompatActivity {
         mUserId = auth.getCurrentUser();
 
 
-        db = FirebaseDatabase.getInstance().getReference().child("Users").child(userSex).child(mUserId.getUid());
+        db = FirebaseDatabase.getInstance().getReference().child("Users").child(mUserId.getUid());
 
         getUserInfo();
 
@@ -186,6 +186,9 @@ public class Settings extends AppCompatActivity {
                         mName = map.get("name").toString();
 
                         userName.setText(mName);
+                    }
+                    if (map.get("sex")!=null){
+                        userSex = map.get("sex").toString();
                     }
                     if (map.get("phone")!=null){
                         mPhone = map.get("phone").toString();
