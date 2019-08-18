@@ -5,15 +5,19 @@
     android:layout_gravity="center"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20dp"
+
     android:outlineProvider="bounds"
-    android:background="#ffff"
+
     android:clipToPadding="false">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:cardCornerRadius="4dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="70dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
         android:layout_gravity="center"
         android:elevation="2dp"
         android:id="@+id/card_view">
@@ -25,16 +29,19 @@
             android:layout_height="match_parent">
 
             <ImageView
+                android:layout_gravity="center"
                 android:id="@+id/image_person"
                 android:layout_width="match_parent"
-                android:layout_height="400dp"
+                android:layout_height="0dp"
+                android:layout_weight=".9"
                 android:scaleType="centerCrop"/>
 
             <TextView
                 android:id="@+id/name_person"
-                android:padding="10dp"
+                android:padding="5dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight=".1"
                 android:background="#fff"
 
                 android:textAlignment="textStart"

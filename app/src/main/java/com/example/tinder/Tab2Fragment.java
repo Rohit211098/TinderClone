@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +19,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.tinder.Matches.MatchesActivity;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -44,7 +46,7 @@ public class Tab2Fragment extends Fragment {
     private int i;
     private FirebaseAuth auth = FirebaseAuth.getInstance();
     private FirebaseUser user = auth.getCurrentUser();
-    private TextView empty;
+
     SwipeFlingAdapterView flingContainer;
 
     private DatabaseReference db = FirebaseDatabase.getInstance().getReference();
@@ -53,6 +55,8 @@ public class Tab2Fragment extends Fragment {
     String userSex,oppositeUserSex;
     List<User> rowItems;
     DatabaseReference userDB = db.child("Users");
+    private FloatingActionButton cross,heart;
+    private LinearLayout empty,notEmpty;
 
 
 
@@ -63,6 +67,10 @@ public class Tab2Fragment extends Fragment {
         View view = inflater.inflate(R.layout.tab2_fragment,container,false);
 
         empty = view.findViewById(R.id.empty);
+        notEmpty =view.findViewById(R.id.not_empty);
+
+        cross = view.findViewById(R.id.floating_left);
+        heart = view.findViewById(R.id.floating_right);
 
         Log.e(TAG,user.getUid());
 
@@ -92,14 +100,17 @@ public class Tab2Fragment extends Fragment {
         arrayAdapter = new CustomArrayAdapter(getContext(),R.layout.item,rowItems);
          flingContainer =  view.findViewById(R.id.frame);
 
+
+
         flingContainer.setAdapter(arrayAdapter);
+
         flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
             @Override
             public void removeFirstObjectInAdapter() {
 //                // this is the simplest way to delete an object from the Adapter (/AdapterView)
-                Log.d("LIST", "removed object!");
-                rowItems.remove(0);
-                arrayAdapter.notifyDataSetChanged();
+//                Log.d("LIST", "removed object!");
+//                rowItems.remove(0);
+//                arrayAdapter.notifyDataSetChanged();
 
             }
 
@@ -140,6 +151,47 @@ public class Tab2Fragment extends Fragment {
             }
         });
 
+        cross.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (rowItems.size() != 0){
+                    int position = rowItems.size()-1;
+                    User currentId = rowItems.get(position);
+                    String id = currentId.getUserID();
+                    userDB.child(id).child("Connections").child("no").child(user.getUid()).setValue(true);
+
+                    arrayAdapter.remove(currentId);
+                    arrayAdapter.notifyDataSetChanged();
+                    isEmpty();
+
+                    makeToast(getContext(), "Left!");
+                }
+
+
+            }
+        });
+
+        heart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (rowItems.size() != 0){
+                    int position = rowItems.size()-1;
+                    User currentId = rowItems.get(position);
+                    String id = currentId.getUserID();
+                    userDB.child(id).child("Connections").child("yes").child(user.getUid()).setValue(true);
+                    isConnectionMatch(id);
+                    arrayAdapter.remove(currentId);
+                    arrayAdapter.notifyDataSetChanged();
+
+                    isEmpty();
+
+                    makeToast(getContext(), "Left!");
+                }
+
+            }
+        });
+
+
 
 
 
@@ -150,7 +202,8 @@ public class Tab2Fragment extends Fragment {
     private void isEmpty(){
         if (rowItems.isEmpty()){
 
-                flingContainer.setVisibility(View.INVISIBLE);
+
+                notEmpty.setVisibility(View.INVISIBLE);
                 empty.setVisibility(View.VISIBLE);
 
         }
