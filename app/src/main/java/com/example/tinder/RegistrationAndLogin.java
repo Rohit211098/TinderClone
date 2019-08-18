@@ -7,10 +7,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class RegistrationAndLogin extends AppCompatActivity {
 
-    private Button loign,register;
+    private TextView loign,register;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
