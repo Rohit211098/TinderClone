@@ -51,6 +51,10 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
     }
 
+    public void clearBackStackInclusive() {
+        finish();
+    }
+
 
 
 

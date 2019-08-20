@@ -103,9 +103,17 @@ public class Tab1Fragment extends Fragment {
     private void logout(){
         auth.signOut();
         Intent intent = new Intent(getContext(),RegistrationAndLogin.class);
-
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
+
         onDestroy();
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        getActivity().finish();
     }
 }
