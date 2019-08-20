@@ -17,6 +17,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tinder.Matches.MatchesActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -28,6 +29,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.lorentzos.flingswipe.FlingCardListener;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
 import java.util.ArrayList;
@@ -38,8 +40,8 @@ import java.util.List;
  * Created by User on 2/28/2017.
  */
 
-public class Tab2Fragment extends Fragment {
-    private static final String TAG = "Tab2Fragment";
+public class Tab2Fragment extends Fragment  {
+    private static final String TAG = "tag";
 
     private User userClass;
     private CustomArrayAdapter arrayAdapter;
@@ -57,6 +59,8 @@ public class Tab2Fragment extends Fragment {
     DatabaseReference userDB = db.child("Users");
     private FloatingActionButton cross,heart;
     private LinearLayout empty,notEmpty;
+    private SwipeFlingAdapterView swipeFlingAdapterView;
+    SwipeFlingAdapterView.onFlingListener onFlingListener;
 
 
 
@@ -74,25 +78,10 @@ public class Tab2Fragment extends Fragment {
 
         Log.e(TAG,user.getUid());
 
-//        logout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                logout();
-//            }
-//        });
         checkUserSex();
 
 
 
-
-//        matches.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(getContext(), MatchesActivity.class);
-//                startActivity(intent);
-//
-//            }
-//        });
 
         rowItems = new ArrayList<User>();
 
@@ -100,69 +89,17 @@ public class Tab2Fragment extends Fragment {
         arrayAdapter = new CustomArrayAdapter(getContext(),R.layout.item,rowItems);
          flingContainer =  view.findViewById(R.id.frame);
 
+         freshAdapt();
 
 
-        flingContainer.setAdapter(arrayAdapter);
 
-        flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
-            @Override
-            public void removeFirstObjectInAdapter() {
-//                // this is the simplest way to delete an object from the Adapter (/AdapterView)
-//                Log.d("LIST", "removed object!");
-//                rowItems.remove(0);
-//                arrayAdapter.notifyDataSetChanged();
-
-            }
-
-            @Override
-            public void onLeftCardExit(Object dataObject) {
-
-                User obj = (User) dataObject;
-                String userID = obj.getUserID();
-                userDB.child(userID).child("Connections").child("no").child(user.getUid()).setValue(true);
-                rowItems.remove(obj);
-                isEmpty();
-
-                makeToast(getContext(), "Left!");
-            }
-
-            @Override
-            public void onRightCardExit(Object dataObject) {
-
-                User obj = (User) dataObject;
-                String userID = obj.getUserID();
-                userDB.child(userID).child("Connections").child("yes").child(user.getUid()).setValue(true);
-                isConnectionMatch(userID);
-                rowItems.remove(obj);
-                isEmpty();
-                makeToast(getContext(), "Right!");
-            }
-
-            @Override
-            public void onAdapterAboutToEmpty(int itemsInAdapter) {
-                // Ask for more data here
-
-
-            }
-
-            @Override
-            public void onScroll(float scrollProgressPercent) {
-
-            }
-        });
 
         cross.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (rowItems.size() != 0){
-                    int position = rowItems.size()-1;
-                    User currentId = rowItems.get(position);
-                    String id = currentId.getUserID();
-                    userDB.child(id).child("Connections").child("no").child(user.getUid()).setValue(true);
 
-                    arrayAdapter.remove(currentId);
-                    arrayAdapter.notifyDataSetChanged();
-                    isEmpty();
+                    flingContainer.getTopCardListener().selectLeft();
 
                     makeToast(getContext(), "Left!");
                 }
@@ -175,17 +112,10 @@ public class Tab2Fragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (rowItems.size() != 0){
-                    int position = rowItems.size()-1;
-                    User currentId = rowItems.get(position);
-                    String id = currentId.getUserID();
-                    userDB.child(id).child("Connections").child("yes").child(user.getUid()).setValue(true);
-                    isConnectionMatch(id);
-                    arrayAdapter.remove(currentId);
-                    arrayAdapter.notifyDataSetChanged();
 
-                    isEmpty();
+                    flingContainer.getTopCardListener().selectRight();
 
-                    makeToast(getContext(), "Left!");
+                    makeToast(getContext(), "right!");
                 }
 
             }
@@ -197,6 +127,74 @@ public class Tab2Fragment extends Fragment {
 
 
         return view;
+    }
+
+    private void freshAdapt(){
+
+
+        flingContainer.setAdapter(arrayAdapter);
+//
+//        swipeFlingAdapterView = new SwipeFlingAdapterView(getContext());
+        onFlingListener = new SwipeFlingAdapterView.onFlingListener() {
+            @Override
+            public void removeFirstObjectInAdapter() {
+                rowItems.remove(0);
+                arrayAdapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onLeftCardExit(Object o) {
+                User obj = (User) o;
+                String userID = obj.getUserID();
+                userDB.child(userID).child("Connections").child("no").child(user.getUid()).setValue(true);
+                rowItems.remove(obj);
+                isEmpty();
+
+                makeToast(getContext(), "Left!");
+
+
+            }
+
+            @Override
+            public void onRightCardExit(Object o) {
+
+
+                User obj = (User) o;
+                String userID = obj.getUserID();
+                userDB.child(userID).child("Connections").child("yes").child(user.getUid()).setValue(true);
+                isConnectionMatch(userID);
+                rowItems.remove(obj);
+                isEmpty();
+                makeToast(getContext(), "Right!");
+
+            }
+
+            @Override
+            public void onAdapterAboutToEmpty(int i) {
+
+            }
+
+            @Override
+            public void onScroll(float v) {
+
+            }
+        } ;
+
+
+
+
+        flingContainer.setFlingListener(onFlingListener);
+
+
+        flingContainer.setOnItemClickListener(new SwipeFlingAdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClicked(int i, Object o) {
+                makeToast(getContext(), "position !"+i);
+            }
+        });
+
+
     }
 
     private void isEmpty(){
@@ -269,6 +267,9 @@ public class Tab2Fragment extends Fragment {
                     }
 
                 }
+                else {
+                    isEmpty();
+                }
             }
 
             @Override
@@ -301,6 +302,7 @@ public class Tab2Fragment extends Fragment {
                     }
 
                 }else {
+
 
 
 

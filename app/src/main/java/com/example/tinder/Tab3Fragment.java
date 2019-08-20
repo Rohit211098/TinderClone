@@ -59,6 +59,7 @@ public class Tab3Fragment extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+
                 recyclerView.removeAllViews();
                 resultMatch.clear();
                 getUserMatch();

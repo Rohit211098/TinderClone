@@ -13,12 +13,16 @@ import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
 import java.util.List;
 
 public class CustomArrayAdapter extends ArrayAdapter<User> {
 
     Context context;
+
+
+
 
     public CustomArrayAdapter(Context context, int resourceId, List<User> items) {
         super(context,resourceId,items);
@@ -41,6 +45,11 @@ public class CustomArrayAdapter extends ArrayAdapter<User> {
         Glide.with(getContext()).load(user_item.getProfileUrl()).placeholder(R.drawable.download).into(imageView);
 
 
+
+
         return convertView;
     }
+
+
+
 }
