@@ -10,6 +10,34 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <LinearLayout
+            android:id="@+id/progressBar_frag_2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+
+            android:visibility="invisible"
+            android:orientation="vertical">
+
+            <com.github.ybq.android.spinkit.SpinKitView
+
+                style="@style/SpinKitView.Large.Circle"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:visibility="visible"
+                app:SpinKit_Color="@color/colorAccent"
+                />
+
+
+        </LinearLayout>
+
+
+
 
         <LinearLayout
             android:id="@+id/empty"
@@ -109,6 +137,8 @@
 
 
     </FrameLayout>
+
+
 
 
 

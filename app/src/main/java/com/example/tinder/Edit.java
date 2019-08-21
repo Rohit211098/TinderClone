@@ -41,12 +41,12 @@ public class Edit extends AppCompatActivity {
 
 
     private ImageView userImage;
-    private EditText userName,userPhone,userAbout,userAge,userJob;
+    private EditText userName,userPhone,userAbout,userAge,userJob,userCity;
     private Button conform,back;
     private DatabaseReference db;
     StorageReference storageReference;
     private FirebaseAuth auth;
-    private String mName,mPhone,mProfilePic,userSex,mAbout,mAge,mJob;
+    private String mName,mPhone,mProfilePic,userSex,mAbout,mAge,mJob,mCity;
     FirebaseUser mUserId;
     private Uri uriImage;
 
@@ -62,6 +62,7 @@ public class Edit extends AppCompatActivity {
         userAbout = findViewById(R.id.setting_about);
         userAge = findViewById(R.id.setting_age);
         userJob = findViewById(R.id.setting_job);
+        userCity = findViewById(R.id.setting_city);
         conform = findViewById(R.id.setting_conform);
         back = findViewById(R.id.setting_back);
         auth = FirebaseAuth.getInstance();
@@ -208,6 +209,12 @@ public class Edit extends AppCompatActivity {
 
                         userJob.setText(mJob);
                     }
+
+                    if (map.get("city")!=null){
+                        mCity = map.get("city").toString();
+
+                        userCity.setText(mCity);
+                    }
                     if (map.get("imageUrl")!=null){
                         mProfilePic = map.get("imageUrl").toString();
 
@@ -229,6 +236,7 @@ public class Edit extends AppCompatActivity {
         mAbout = userAbout.getText().toString().trim();
         mAge = userAge.getText().toString().trim();
         mJob = userJob.getText().toString().trim();
+        mCity = userCity.getText().toString().trim();
 
         if (mName.equals("") && mPhone.equals("")){
             Toast.makeText(getApplicationContext()," Feilds cannot be empty",Toast.LENGTH_SHORT).show();
@@ -239,6 +247,7 @@ public class Edit extends AppCompatActivity {
             userInfo.put("about",mAbout);
             userInfo.put("age",mAge);
             userInfo.put("job",mJob);
+            userInfo.put("city",mCity);
             db.updateChildren(userInfo).addOnSuccessListener(new OnSuccessListener() {
                 @Override
                 public void onSuccess(Object o) {

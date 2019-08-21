@@ -28,9 +28,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Registration extends AppCompatActivity {
-    private EditText mEmail,mPassword,mName;
+    private EditText mEmail,mPassword,mName,mAge;
     private Button mRegistration;
-    private String email,password,name;
+    private String email,password,name,age;
     private RadioGroup radioGroup;
 
 
@@ -87,6 +87,7 @@ public class Registration extends AppCompatActivity {
         }
 
         name = mName.getText().toString().trim();
+        age = mAge.getText().toString().trim();
 
         email = mEmail.getText().toString().trim();
         password = mPassword.getText().toString().trim();
@@ -105,6 +106,7 @@ public class Registration extends AppCompatActivity {
                         Map userInfo = new HashMap();
                         userInfo.put("name",name);
                         userInfo.put("sex",radioButton.getText().toString());
+                        userInfo.put("age",age);
 
                         db.updateChildren(userInfo);
 

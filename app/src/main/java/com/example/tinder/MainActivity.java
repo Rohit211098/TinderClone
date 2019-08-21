@@ -38,6 +38,41 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.getTabAt(0).setIcon(R.drawable.profileicon);
         tabLayout.getTabAt(1).setIcon(R.drawable.tinderlogo);
         tabLayout.getTabAt(2).setIcon(R.drawable.messageicon);
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                switch (tab.getPosition()){
+                    case 0:tab.setIcon(R.drawable.userselectedicon);
+                        break;
+                    case 1:tab.setIcon(R.drawable.tinderlogo);
+                        break;
+                    case 2:tab.setIcon(R.drawable.messageiconsellected);
+                        break;
+                }
+
+
+
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                switch (tab.getPosition()){
+                    case 0:tab.setIcon(R.drawable.profileicon);
+                        break;
+                    case 1:tab.setIcon(R.drawable.tinderlogogselected);
+                        break;
+                    case 2:tab.setIcon(R.drawable.messageicon);
+                        break;
+                }
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+
+            }
+        });
 
 
     }
@@ -49,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
         adapter.addFragment(new Tab2Fragment());
         adapter.addFragment(new Tab3Fragment());
         viewPager.setAdapter(adapter);
+        viewPager.setCurrentItem(1);
     }
 
     public void clearBackStackInclusive() {

@@ -28,26 +28,35 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ImageView
-                android:layout_gravity="center"
-                android:id="@+id/image_person"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight=".9"
-                android:scaleType="centerCrop"/>
+                android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/name_person"
-                android:padding="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight=".1"
-                android:background="#fff"
 
-                android:textAlignment="textStart"
-                android:textColor="#0C0C0C"
-                android:textSize="40sp"
-                tools:text="hello" />
+                <ImageView
+                    android:layout_gravity="center"
+                    android:id="@+id/image_person"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".9"
+                    android:scaleType="centerCrop"/>
+
+                <TextView
+                    android:id="@+id/name_person"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_weight=".1"
+                    android:padding="10dp"
+
+                    android:textColor="#fff"
+                    android:textSize="40sp"
+                    android:textStyle="bold"
+                    tools:text="hello" />
+
+
+            </FrameLayout>
+
 
 
         </LinearLayout>

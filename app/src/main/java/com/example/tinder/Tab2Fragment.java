@@ -8,18 +8,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.tinder.Matches.MatchesActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -29,16 +25,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.lorentzos.flingswipe.FlingCardListener;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-/**
- * Created by User on 2/28/2017.
- */
+
 
 public class Tab2Fragment extends Fragment  {
     private static final String TAG = "tag";
@@ -58,7 +51,7 @@ public class Tab2Fragment extends Fragment  {
     List<User> rowItems;
     DatabaseReference userDB = db.child("Users");
     private FloatingActionButton cross,heart;
-    private LinearLayout empty,notEmpty;
+    private LinearLayout empty,notEmpty,progressBar;
     private SwipeFlingAdapterView swipeFlingAdapterView;
     SwipeFlingAdapterView.onFlingListener onFlingListener;
 
@@ -72,9 +65,12 @@ public class Tab2Fragment extends Fragment  {
 
         empty = view.findViewById(R.id.empty);
         notEmpty =view.findViewById(R.id.not_empty);
+        progressBar = view.findViewById(R.id.progressBar_frag_2);
 
         cross = view.findViewById(R.id.floating_left);
         heart = view.findViewById(R.id.floating_right);
+
+        progressBarVisible();
 
         Log.e(TAG,user.getUid());
 
@@ -190,7 +186,9 @@ public class Tab2Fragment extends Fragment  {
         flingContainer.setOnItemClickListener(new SwipeFlingAdapterView.OnItemClickListener() {
             @Override
             public void onItemClicked(int i, Object o) {
-                makeToast(getContext(), "position !"+i);
+                Intent intent = new Intent(getContext(),Info.class);
+                intent.putExtra("userid",rowItems.get(i).getUserID());
+                startActivity(intent);
             }
         });
 
@@ -266,6 +264,9 @@ public class Tab2Fragment extends Fragment  {
                         displayOppositeSex();
                     }
 
+
+                    progressBarInvisible();
+
                 }
                 else {
                     isEmpty();
@@ -293,11 +294,11 @@ public class Tab2Fragment extends Fragment  {
                 if(dataSnapshot.exists()&&!dataSnapshot.child("Connections").child("no").hasChild(user.getUid())&&!dataSnapshot.child("Connections").child("yes").hasChild(user.getUid()) && dataSnapshot.child("sex").getValue().toString().equals(oppositeUserSex)){
 
                     try {
-                        rowItems.add(new User(dataSnapshot.getKey(),dataSnapshot.child("name").getValue().toString(),dataSnapshot.child("imageUrl").getValue().toString()));
+                        rowItems.add(new User(dataSnapshot.getKey(),dataSnapshot.child("name").getValue().toString(),dataSnapshot.child("age").getValue().toString(),dataSnapshot.child("imageUrl").getValue().toString()));
                         arrayAdapter.notifyDataSetChanged();
 
                     }catch (Exception e){
-                        rowItems.add(new User(dataSnapshot.getKey(),dataSnapshot.child("name").getValue().toString(),defaultImageUrl));
+                        rowItems.add(new User(dataSnapshot.getKey(),dataSnapshot.child("name").getValue().toString(),dataSnapshot.child("age").getValue().toString()));
                         arrayAdapter.notifyDataSetChanged();
                     }
 
@@ -331,6 +332,21 @@ public class Tab2Fragment extends Fragment  {
         });
 
 
+
+    }
+
+    private void progressBarVisible(){
+        progressBar.setVisibility(View.VISIBLE);
+        notEmpty.setVisibility(View.INVISIBLE);
+        empty.setVisibility(View.INVISIBLE);
+
+    }
+
+    private void progressBarInvisible(){
+
+        progressBar.setVisibility(View.INVISIBLE);
+        notEmpty.setVisibility(View.VISIBLE);
+        empty.setVisibility(View.VISIBLE);
 
     }
 

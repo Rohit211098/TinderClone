@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +19,7 @@ import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -32,12 +34,14 @@ import java.util.Map;
 public class Tab1Fragment extends Fragment {
     private static final String TAG = "Tab1Fragment";
 
-    private ImageButton setting,update;
+    private FloatingActionButton setting,update,addImages;
     private ImageView profilePicture;
     private TextView name;
     private FirebaseAuth auth;
     FirebaseUser mUserId;
     private DatabaseReference db;
+    private ProgressBar progressBar;
+    String mName,mAge;
 
 
     @Nullable
@@ -47,8 +51,20 @@ public class Tab1Fragment extends Fragment {
 
         profilePicture =view.findViewById(R.id.user_profile_info);
         name = view.findViewById(R.id.user_profile_name);
-        update = view.findViewById(R.id.user_profile_edit);
-        setting = view.findViewById(R.id.user_profile_setting);
+        update = view.findViewById(R.id.fab_edit);
+        setting = view.findViewById(R.id.fab_setting);
+        addImages = view.findViewById(R.id.floatingActionButton3);
+        progressBar = view.findViewById(R.id.progressBar_frag_1);
+
+        addImages.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Toast.makeText(getActivity(),"added ",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        progressBarVisible();
 
         auth = FirebaseAuth.getInstance();
         mUserId = auth.getCurrentUser();
@@ -67,7 +83,8 @@ public class Tab1Fragment extends Fragment {
         setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                logout();
+                Intent intent = new Intent(getContext(),Settings.class);
+                startActivity(intent);
             }
         });
 
@@ -85,12 +102,18 @@ public class Tab1Fragment extends Fragment {
                     Map<String,Object> map = ( Map<String,Object>)dataSnapshot.getValue();
                     if (map.get("name")!=null){
 
-                        name.setText(map.get("name").toString());
+                        mName = map.get("name").toString();
+                    } if (map.get("age")!=null){
+
+                        mAge = map.get("age").toString();
                     }
                     if (map.get("imageUrl")!=null){
                         Glide.with(getContext()).load(map.get("imageUrl").toString()).placeholder(R.drawable.download).apply(RequestOptions.circleCropTransform()).into(profilePicture);
                     }
+                    name.setText(mName +", "+mAge);
                 }
+
+                progressBarInvisible();
             }
 
             @Override
@@ -100,20 +123,23 @@ public class Tab1Fragment extends Fragment {
         });
     }
 
-    private void logout(){
-        auth.signOut();
-        Intent intent = new Intent(getContext(),RegistrationAndLogin.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
 
-        onDestroy();
+
+    private void progressBarVisible(){
+        progressBar.setVisibility(View.VISIBLE);
+        profilePicture.setVisibility(View.INVISIBLE);
+        name.setVisibility(View.INVISIBLE);
+//        update.setVisibility(View.INVISIBLE);
+//        setting.setVisibility(View.INVISIBLE);
 
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
+    private void progressBarInvisible(){
+        progressBar.setVisibility(View.INVISIBLE);
+        profilePicture.setVisibility(View.VISIBLE);
+        name.setVisibility(View.VISIBLE);
+//        update.setVisibility(View.VISIBLE);
+//        setting.setVisibility(View.VISIBLE);
 
-        getActivity().finish();
     }
 }

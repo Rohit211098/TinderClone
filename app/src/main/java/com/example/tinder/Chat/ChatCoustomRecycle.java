@@ -2,6 +2,7 @@ package com.example.tinder.Chat;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,8 @@ public class ChatCoustomRecycle extends RecyclerView.Adapter<ChatCoustomRecycle.
 
     List<ChatPojo> chatList;
     Context context;
+    View view;
+
 
     public ChatCoustomRecycle(List<ChatPojo> chatList, Context context) {
         this.chatList = chatList;
@@ -30,7 +33,7 @@ public class ChatCoustomRecycle extends RecyclerView.Adapter<ChatCoustomRecycle.
     @Override
     public ChatCoustomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_chat,parent,false);
+        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_chat,parent,false);
 
         return new ChatCoustomViewHolder(view);
     }
@@ -41,13 +44,17 @@ public class ChatCoustomRecycle extends RecyclerView.Adapter<ChatCoustomRecycle.
         holder.message.setText(chatList.get(position).getMessage());
 
         if (chatList.get(position).getCurrentUser()){
-            holder.message.setGravity(Gravity.END);
+            holder.linearLayout.setGravity(Gravity.END);
+            holder.linearLayoutParent.setGravity(Gravity.END);
             holder.message.setTextColor(Color.parseColor("#404040"));
-            holder.linearLayout.setBackgroundColor(Color.parseColor("#F4F4F4"));
+            holder.message.setBackground(view.getResources().getDrawable(R.drawable.rounded_rectangle_user));
+//            holder.linearLayout.setBackgroundColor(Color.parseColor("#F4F4F4"));
         }else {
-            holder.message.setGravity(Gravity.START);
+            holder.linearLayout.setGravity(Gravity.START);
+            holder.linearLayoutParent.setGravity(Gravity.START);
             holder.message.setTextColor(Color.parseColor("#FFFFFF"));
-            holder.linearLayout.setBackgroundColor(Color.parseColor("#2DB4C8"));
+            holder.message.setBackground(view.getResources().getDrawable(R.drawable.rounded_rectangle_another_user));
+//            holder.linearLayout.setBackgroundColor(Color.parseColor("#2DB4C8"));
         }
 
 
@@ -64,7 +71,7 @@ public class ChatCoustomRecycle extends RecyclerView.Adapter<ChatCoustomRecycle.
     protected class ChatCoustomViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         private TextView message;
-        private LinearLayout linearLayout;
+        private LinearLayout linearLayout,linearLayoutParent;
 
         public ChatCoustomViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -73,6 +80,7 @@ public class ChatCoustomRecycle extends RecyclerView.Adapter<ChatCoustomRecycle.
 
             message = itemView.findViewById(R.id.message);
             linearLayout = itemView.findViewById(R.id.container);
+            linearLayoutParent = itemView.findViewById(R.id.container_parent);
 
         }
 

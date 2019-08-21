@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -37,6 +39,8 @@ public class Tab3Fragment extends Fragment {
     CoustomRecycle recycler;
     String currentUserId;
     private ArrayList<MatchPojo> resultMatch = new ArrayList<>();
+    private ProgressBar progressBar;
+    private TextView textView;
 
     private Button btnTEST;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -47,6 +51,9 @@ public class Tab3Fragment extends Fragment {
         View view = inflater.inflate(R.layout.tab3_fragment,container,false);
         resultMatch.clear();
         recyclerView = view.findViewById(R.id.recycler);
+        textView = view.findViewById(R.id.textView);
+        progressBar = view.findViewById(R.id.progressBar_frag_3);
+        progressBarVisible();
         recyclerView.setNestedScrollingEnabled(false);
         currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         recycler = new CoustomRecycle(getDataSet(),getContext());
@@ -83,7 +90,11 @@ public class Tab3Fragment extends Fragment {
                     for (DataSnapshot match :dataSnapshot.getChildren()){
                         fetchMatchInformation(match.getKey());
                     }
+                }else {
+                    textView.setText("No Matches");
                 }
+
+                progressBarInvisible();
             }
 
             @Override
@@ -128,5 +139,22 @@ public class Tab3Fragment extends Fragment {
 
     private List<MatchPojo> getDataSet() {
         return resultMatch;
+    }
+
+    private void progressBarVisible(){
+        progressBar.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.INVISIBLE);
+        textView.setVisibility(View.INVISIBLE);
+
+
+
+    }
+
+    private void progressBarInvisible(){
+
+        progressBar.setVisibility(View.INVISIBLE);
+        recyclerView.setVisibility(View.VISIBLE);
+        textView.setVisibility(View.VISIBLE);
+
     }
 }

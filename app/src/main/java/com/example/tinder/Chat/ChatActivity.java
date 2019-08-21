@@ -47,6 +47,7 @@ public class ChatActivity extends AppCompatActivity {
 
         sendEditText = findViewById(R.id.message_send);
         send = findViewById(R.id.send_button);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
 

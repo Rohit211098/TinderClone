@@ -41,8 +41,14 @@ public class CustomArrayAdapter extends ArrayAdapter<User> {
         TextView name = convertView.findViewById(R.id.name_person);
         ImageView imageView = convertView.findViewById(R.id.image_person);
 
-        name.setText(user_item.getName());
-        Glide.with(getContext()).load(user_item.getProfileUrl()).placeholder(R.drawable.download).into(imageView);
+        name.setText(user_item.getName()+", "+user_item.getAge());
+
+        if (user_item.getProfileUrl() == null){
+            Glide.with(getContext()).load(R.drawable.noimage).placeholder(R.drawable.download).into(imageView);
+        }else {
+            Glide.with(getContext()).load(user_item.getProfileUrl()).placeholder(R.drawable.download).into(imageView);
+        }
+
 
 
 
