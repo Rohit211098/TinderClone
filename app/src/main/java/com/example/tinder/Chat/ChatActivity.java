@@ -52,6 +52,7 @@ public class ChatActivity extends AppCompatActivity {
 
 
         matchId = getIntent().getExtras().getString("MatchId");
+        Log.e(TAG, "onCreate: match id   "+matchId );
 
         mChatRecyclerView = findViewById(R.id.chat_recycle);
         mChatRecyclerView.setNestedScrollingEnabled(false);
@@ -110,7 +111,7 @@ public class ChatActivity extends AppCompatActivity {
                     Map<String,Object> map = ( Map<String,Object>)dataSnapshot.getValue();
                     if (map.get("chatId")!=null){
                         chatId = map.get("chatId").toString();
-
+                        Log.e(TAG, "onDataChange: data chate id"+chatId );
                         mDatabaseChat = mDatabaseChat.child(chatId);
 
                         getChatMessages();

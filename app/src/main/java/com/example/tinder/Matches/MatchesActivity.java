@@ -29,7 +29,7 @@ public class MatchesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_matches);
-        recyclerView = findViewById(R.id.recycler);
+        recyclerView = findViewById(R.id.recycler_new_match);
         recyclerView.setNestedScrollingEnabled(false);
         currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         recycler = new CoustomRecycle(getDataSet(),getApplicationContext());
