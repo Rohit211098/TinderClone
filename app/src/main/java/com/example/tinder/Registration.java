@@ -45,6 +45,7 @@ public class Registration extends AppCompatActivity {
         setContentView(R.layout.activity_registration);
 
         mEmail = findViewById(R.id.register_email);
+        mAge = findViewById(R.id.register_age);
         mPassword = findViewById(R.id.register_password);
         mRegistration = findViewById(R.id.button_Registration);
         mName = findViewById(R.id.register_name);
@@ -82,9 +83,9 @@ public class Registration extends AppCompatActivity {
 
         final RadioButton radioButton = findViewById(selectedId);
 
-        if (radioButton.getText() == null){
-            return;
-        }
+//        if (radioButton.getText() == null){
+//            return;
+//        }
 
         name = mName.getText().toString().trim();
         age = mAge.getText().toString().trim();
@@ -92,8 +93,8 @@ public class Registration extends AppCompatActivity {
         email = mEmail.getText().toString().trim();
         password = mPassword.getText().toString().trim();
 
-        if (email.equals("") || password.equals("")){
-            Toast.makeText(this,"Email or Password cannot be empty",Toast.LENGTH_SHORT).show();
+        if (email.equals("") || password.equals("")||name.equals("")||age.equals("")||radioButton == null){
+            Toast.makeText(this,"Every Field is mandatory  cannot be empty",Toast.LENGTH_SHORT).show();
         }else {
             auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(Registration.this,new OnCompleteListener<AuthResult>() {
                 @Override
