@@ -30,9 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by User on 2/28/2017.
- */
+
 
 public class Tab3Fragment extends Fragment {
     private static final String TAG = "Tab3Fragment";
@@ -187,6 +185,7 @@ public class Tab3Fragment extends Fragment {
                             if (match.getKey().equals(chatId)){
 
                                 for (DataSnapshot last : match.getChildren()){
+
                                     lastMessage = last.child("text").getValue().toString();
                                     Log.e("a", "yes 32132" + lastMessage );
                                 }

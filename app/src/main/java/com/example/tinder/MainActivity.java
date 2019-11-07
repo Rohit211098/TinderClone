@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
         TabLayout tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-
+        tabLayout.setSelectedTabIndicatorHeight(0);
 
         tabLayout.getTabAt(0).setIcon(R.drawable.profileicon);
         tabLayout.getTabAt(1).setIcon(R.drawable.tinderlogo);
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case 1:tab.setIcon(R.drawable.tinderlogo);
                         break;
-                    case 2:tab.setIcon(R.drawable.messageiconsellected);
+                    case 2:tab.setIcon(R.drawable.messageiconselected);
                         break;
                 }
 
